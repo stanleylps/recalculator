@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Retirement Goal Planner · ReCalculator</title>
+  <meta name="description" content="Work out how much you need to save each month to retire with the passive income you want, and how long your money will last.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">Re<span>Calculator</span></a>
+      <nav class="nav" aria-label="Tools">
+        <a href="../goal/" aria-current="page">Goal planner</a>
+        <a href="../projection/">Portfolio projection</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <h1>How much do I need to save for retirement?</h1>
+      <p>Tell us the monthly passive income you want in retirement. We'll work out the portfolio you need, the monthly saving that gets you there, and how long the money lasts once you start drawing it down.</p>
+    </section>
+
+    <div class="calc">
+      <form class="card inputs" id="form" onsubmit="return false" novalidate>
+        <h2>Your goal</h2>
+        <div class="field">
+          <label for="income">Monthly passive income you want</label>
+          <div class="input"><span class="affix">$</span><input id="income" data-key="income" data-type="money" data-min="0" value="5000"></div>
+          <span class="hint">In today's money. We adjust it for inflation.</span>
+        </div>
+        <div class="field">
+          <label for="age">Your current age</label>
+          <div class="input"><input id="age" data-key="age" data-type="number" data-min="0" data-max="100" value="35"><span class="affix">years old</span></div>
+        </div>
+        <div class="field">
+          <label for="years">Years until retirement</label>
+          <div class="slider-row">
+            <input type="range" min="1" max="50" step="1" data-mirror="years" aria-label="Years until retirement">
+            <div class="input"><input id="years" data-key="years" data-type="number" data-min="1" data-max="60" value="25"><span class="affix">yrs</span></div>
+          </div>
+        </div>
+
+        <h2>Where you are now</h2>
+        <div class="field">
+          <label for="portfolio">Current portfolio size</label>
+          <div class="input"><span class="affix">$</span><input id="portfolio" data-key="portfolio" data-type="money" data-min="0" value="50000"></div>
+        </div>
+
+        <h2>Assumptions</h2>
+        <div class="field">
+          <label for="ret">Expected return before retirement</label>
+          <div class="input"><input id="ret" data-key="ret" data-type="percent" data-min="-10" data-max="30" value="7"><span class="affix">% / yr</span></div>
+        </div>
+        <div class="field">
+          <label for="retDraw">Expected return during retirement</label>
+          <div class="input"><input id="retDraw" data-key="retDraw" data-type="percent" data-min="-10" data-max="30" value="5"><span class="affix">% / yr</span></div>
+          <span class="hint">Often lower, as portfolios shift to safer assets.</span>
+        </div>
+        <div class="field">
+          <label for="infl">Inflation</label>
+          <div class="input"><input id="infl" data-key="infl" data-type="percent" data-min="-5" data-max="20" value="3"><span class="affix">% / yr</span></div>
+        </div>
+        <div class="field">
+          <label for="wr">Drawdown rate</label>
+          <div class="slider-row">
+            <input type="range" min="2" max="10" step="0.25" data-mirror="wr" aria-label="Drawdown rate">
+            <div class="input"><input id="wr" data-key="wr" data-type="percent" data-min="0.5" data-max="20" value="4"><span class="affix">%</span></div>
+          </div>
+          <span class="hint">The share of your portfolio you withdraw in the first year of retirement. Sets your target: income ÷ rate.</span>
+        </div>
+
+        <div class="input-actions">
+          <button type="button" class="btn" data-action="share">Copy link to these numbers</button>
+          <button type="button" class="btn" data-action="reset">Reset</button>
+        </div>
+      </form>
+
+      <div class="results" aria-live="polite">
+        <div class="card hero">
+          <div class="label" id="heroLabel">Save every month</div>
+          <div class="big" id="heroValue">—</div>
+          <div class="sub" id="heroSub"></div>
+        </div>
+
+        <div class="stats">
+          <div class="card stat">
+            <div class="label">Portfolio you need</div>
+            <div class="value" id="target">—</div>
+            <div class="note" id="targetNote"></div>
+          </div>
+          <div class="card stat">
+            <div class="label">Your first month's income</div>
+            <div class="value" id="futureIncome">—</div>
+            <div class="note" id="futureIncomeNote"></div>
+          </div>
+          <div class="card stat">
+            <div class="label">Today's portfolio alone grows to</div>
+            <div class="value" id="alone">—</div>
+            <div class="note">With no further saving</div>
+          </div>
+          <div class="card stat" id="lastsCard">
+            <div class="label">Your money lasts</div>
+            <div class="value" id="lasts">—</div>
+            <div class="note" id="lastsNote"></div>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head">
+            <h2>Your portfolio over time</h2>
+            <div class="toggle" id="view" role="group" aria-label="Show values in">
+              <button type="button" data-value="nominal" aria-pressed="true">Future dollars</button>
+              <button type="button" data-value="real" aria-pressed="false">Today's dollars</button>
+            </div>
+          </div>
+          <div class="legend">
+            <span><i style="background:var(--save)"></i>Building up</span>
+            <span><i style="background:var(--draw)"></i>Drawing down</span>
+          </div>
+          <div class="chart" id="chart"></div>
+          <p class="callout" id="explain"></p>
+          <details class="table">
+            <summary>Year-by-year table</summary>
+            <div class="table-scroll"><table>
+              <thead><tr><th>Age</th><th>Phase</th><th>Balance</th><th>In today's dollars</th></tr></thead>
+              <tbody id="rows"></tbody>
+            </table></div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>For education only, not financial advice. Results assume steady returns and inflation every year; real markets go up and down, which can make money run out sooner or last longer.</p>
+      <p>Savings are added at the end of each month. Retirement income is withdrawn at the start of each month and rises with inflation.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/js/calc.js"></script>
+  <script src="../assets/js/chart.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/goal.js"></script>
+</body>
+</html>

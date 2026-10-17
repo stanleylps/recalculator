@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio Projection · ReCalculator</title>
+  <meta name="description" content="See how big your portfolio could grow if you keep saving a set amount every month.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../">Re<span>Calculator</span></a>
+      <nav class="nav" aria-label="Tools">
+        <a href="../goal/">Goal planner</a>
+        <a href="../projection/" aria-current="page">Portfolio projection</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <h1>How big will my portfolio grow?</h1>
+      <p>Enter what you have today and what you save each month. We'll project your portfolio forward, show it in today's dollars, and estimate the monthly income it could pay you.</p>
+    </section>
+
+    <div class="calc">
+      <form class="card inputs" id="form" onsubmit="return false" novalidate>
+        <h2>Your savings</h2>
+        <div class="field">
+          <label for="portfolio">Current portfolio size</label>
+          <div class="input"><span class="affix">$</span><input id="portfolio" data-key="portfolio" data-type="money" data-min="0" value="50000"></div>
+        </div>
+        <div class="field">
+          <label for="saving">Monthly saving</label>
+          <div class="input"><span class="affix">$</span><input id="saving" data-key="saving" data-type="money" data-min="0" value="1500"></div>
+        </div>
+        <div class="field">
+          <label for="step">Increase saving each year by</label>
+          <div class="input"><input id="step" data-key="step" data-type="percent" data-min="0" data-max="50" value="0"><span class="affix">% / yr</span></div>
+          <span class="hint">Optional. For example, raise it in line with pay rises.</span>
+        </div>
+        <div class="field">
+          <label for="years">Years to invest</label>
+          <div class="slider-row">
+            <input type="range" min="1" max="50" step="1" data-mirror="years" aria-label="Years to invest">
+            <div class="input"><input id="years" data-key="years" data-type="number" data-min="1" data-max="60" value="25"><span class="affix">yrs</span></div>
+          </div>
+        </div>
+
+        <h2>Assumptions</h2>
+        <div class="field">
+          <label for="ret">Expected return</label>
+          <div class="input"><input id="ret" data-key="ret" data-type="percent" data-min="-10" data-max="30" value="7"><span class="affix">% / yr</span></div>
+        </div>
+        <div class="field">
+          <label for="infl">Inflation</label>
+          <div class="input"><input id="infl" data-key="infl" data-type="percent" data-min="-5" data-max="20" value="3"><span class="affix">% / yr</span></div>
+        </div>
+        <div class="field">
+          <label for="wr">Drawdown rate for income estimate</label>
+          <div class="input"><input id="wr" data-key="wr" data-type="percent" data-min="0" data-max="20" value="4"><span class="affix">%</span></div>
+          <span class="hint">Used to estimate the monthly income the final portfolio could pay.</span>
+        </div>
+
+        <div class="input-actions">
+          <button type="button" class="btn" data-action="share">Copy link to these numbers</button>
+          <button type="button" class="btn" data-action="reset">Reset</button>
+        </div>
+      </form>
+
+      <div class="results" aria-live="polite">
+        <div class="card hero">
+          <div class="label" id="heroLabel">Your portfolio could grow to</div>
+          <div class="big" id="heroValue">—</div>
+          <div class="sub" id="heroSub"></div>
+        </div>
+
+        <div class="stats">
+          <div class="card stat">
+            <div class="label">In today's dollars</div>
+            <div class="value" id="real">—</div>
+            <div class="note" id="realNote">After inflation</div>
+          </div>
+          <div class="card stat">
+            <div class="label">You put in</div>
+            <div class="value" id="contrib">—</div>
+            <div class="note" id="contribNote"></div>
+          </div>
+          <div class="card stat good">
+            <div class="label">Investment growth</div>
+            <div class="value" id="growth">—</div>
+            <div class="note" id="growthNote"></div>
+          </div>
+          <div class="card stat">
+            <div class="label">Monthly income it could pay</div>
+            <div class="value" id="income">—</div>
+            <div class="note" id="incomeNote"></div>
+          </div>
+        </div>
+
+        <div class="card panel">
+          <div class="panel-head">
+            <h2>Growth over time</h2>
+            <div class="toggle" id="view" role="group" aria-label="Show values in">
+              <button type="button" data-value="nominal" aria-pressed="true">Future dollars</button>
+              <button type="button" data-value="real" aria-pressed="false">Today's dollars</button>
+            </div>
+          </div>
+          <div class="legend">
+            <span><i style="background:var(--save)"></i>Portfolio value</span>
+            <span><i style="background:var(--contrib)"></i>Money you put in</span>
+          </div>
+          <div class="chart" id="chart"></div>
+          <p class="callout" id="explain"></p>
+          <details class="table">
+            <summary>Year-by-year table</summary>
+            <div class="table-scroll"><table>
+              <thead><tr><th>Year</th><th>Monthly saving</th><th>Put in so far</th><th>Balance</th><th>In today's dollars</th></tr></thead>
+              <tbody id="rows"></tbody>
+            </table></div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>For education only, not financial advice. Results assume the same return and inflation every year; real markets go up and down.</p>
+      <p>Savings are added at the end of each month. "Put in" is your starting portfolio plus every monthly saving, not adjusted for inflation.</p>
+    </div>
+  </footer>
+
+  <script src="../assets/js/calc.js"></script>
+  <script src="../assets/js/chart.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/projection.js"></script>
+</body>
+</html>
