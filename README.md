@@ -1,9 +1,10 @@
-# ReCalculator
+# LearnwithStanley.com Retirement Calculators
 
 Free retirement calculators for learnwithstanley.com/recalculator.
 
 - **Goal planner** (`goal/`): monthly income you want → portfolio you need, monthly saving to get there, and how long the money lasts at your drawdown rate.
 - **Portfolio projection** (`projection/`): what you save today → how big the portfolio grows, its value in today's dollars, and the income it could pay.
+- **Disclosure** (`disclosure/`): full disclosure, linked from the footer of every page.
 
 Plain HTML, CSS and JavaScript. No build step, no dependencies, no server code. Every link is relative, so the site works under any subfolder.
 
@@ -29,6 +30,7 @@ Upload these files into a folder called `recalculator` at the root of your websi
 index.html
 goal/index.html
 projection/index.html
+disclosure/index.html
 assets/
 ```
 
@@ -37,7 +39,7 @@ You don't need to upload `tests/`, `dev-server.py`, `README.md` or `.claude/`.
 To make a zip with only the files the website needs:
 
 ```bash
-zip -r recalculator.zip index.html goal projection assets
+zip -r recalculator.zip index.html goal projection disclosure assets
 ```
 
 How to upload depends on your host:

@@ -1,5 +1,5 @@
 /*
- * ReCalculator core math. Pure functions, no DOM.
+ * Retirement calculator core math. Pure functions, no DOM.
  * Works in the browser (window.RC) and in Node (module.exports) for tests.
  *
  * Conventions
