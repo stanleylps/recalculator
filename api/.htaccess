@@ -1,0 +1,4 @@
+# Keep the API token and cached group id private.
+<FilesMatch "^(config\.php|config\.example\.php|\.group-id)$">
+  Require all denied
+</FilesMatch>

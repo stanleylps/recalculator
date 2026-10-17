@@ -74,6 +74,18 @@ How to upload depends on your host:
 3. Add a card to the right group on the home page `index.html`.
 4. Run `python3 scripts/sync-layout.py` so the new page gets the shared header, footer, fonts and disclosure.
 
+## Email access (Sender)
+
+The home page is open to everyone. The first time a visitor opens a calculator they are asked for their email once (`assets/js/gate.js`); after that every calculator is unlocked on that device (saved in the browser for two years).
+
+The email is sent to `api/subscribe.php`, which adds it to the Sender group **LearnwithStanley Calculators** (created automatically on the first sign-up). One-time setup on the server:
+
+1. In Sender, go to Settings > API access tokens and create a token.
+2. Copy `api/config.example.php` to `api/config.php` and paste the token in.
+3. Upload the `api` folder with the rest of the site. `config.php` is never committed to GitHub and `.htaccess` stops browsers opening it.
+
+If the endpoint can't be reached (for example on GitHub Pages, which doesn't run PHP), visitors are let in anyway so nobody gets locked out.
+
 ## Sharing results
 
 Every calculator has a **Share results** button (`assets/js/share.js`). It reads the results already shown on the page and offers a branded 1080×1080 image, WhatsApp, Telegram, Facebook, LinkedIn, X, email and a copyable summary. New tools get it automatically as long as they use the same `.hero` and `.stat` layout.

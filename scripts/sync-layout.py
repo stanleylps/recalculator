@@ -41,6 +41,10 @@ def head(pre, rel, title, desc):
   <!-- /layout:head -->'''
 
 
+GATE_HEAD = ("""  <script>/* gate */try{if(!localStorage.getItem('lws_calc_access')&&!/(^|; )lws_calc_access=/.test(document.cookie))"""
+             """document.documentElement.classList.add('gated')}catch(e){document.documentElement.classList.add('gated')}</script>""")
+
+
 def header(pre, is_home):
     current = ' aria-current="page"' if is_home else ''
     return f'''<header class="site-header">
@@ -87,6 +91,14 @@ for rel in pages():
     s = re.sub(r'\s*<meta (?:name="theme-color"|property="og:[^"]*"|name="twitter:[^"]*")[^>]*>', "", s)
     block = head(pre, rel, title, desc)
     s = s.replace("</title>", "</title>\n  " + block, 1)
+    # Every page except the disclosure gets the email access gate; calculator pages start
+    # blurred until access is confirmed (the inline check avoids a flash of the page).
+    s = re.sub(r'\s*<script>/\* gate \*/.*?</script>', "", s, flags=re.S)
+    s = re.sub(r'\s*<script src="[^"]*assets/js/gate.js"></script>', "", s)
+    if rel != "disclosure/index.html":
+        if 'class="calc"' in s:
+            s = s.replace("<!-- /layout:head -->", GATE_HEAD + "\n  <!-- /layout:head -->", 1)
+        s = s.replace("</body>", f'  <script src="{pre}assets/js/gate.js"></script>\n</body>', 1)
     # Calculator pages get the Share button.
     if 'class="card hero"' in s and "share.js" not in s:
         s = s.replace("</body>", f'  <script src="{pre}assets/js/share.js"></script>\n</body>', 1)
