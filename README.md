@@ -58,6 +58,8 @@ To make a zip with only the files the website needs:
 zip -r recalculator.zip . -x "tests/*" "scripts/*" ".claude/*" ".git/*" dev-server.py README.md .gitignore
 ```
 
+The quickest way: run `sh scripts/make-upload.sh`, which builds `upload/recalculator/` with only the website files. In Cyberduck, open your site's `public_html` folder and drag that `recalculator` folder in.
+
 How to upload depends on your host:
 
 - **cPanel / shared hosting / FTP:** in File Manager (or your FTP app) open `public_html`, create a folder `recalculator`, and upload the files into it (or upload the zip and extract it there).

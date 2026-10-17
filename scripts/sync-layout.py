@@ -10,7 +10,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 YEAR = "2026"
 # Public address of the site, used for social link previews (Open Graph).
 # Change this to "https://learnwithstanley.com/recalculator/" once the site moves there, then re-run.
-SITE_URL = "https://stanleylps.github.io/recalculator/"
+SITE_URL = "https://learnwithstanley.com/recalculator/"
 
 FONTS = ("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700"
          "&family=Playfair+Display:wght@600;700&display=swap")
