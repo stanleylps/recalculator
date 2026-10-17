@@ -77,6 +77,20 @@ def pages():
             yield p
 
 
+import hashlib
+
+
+def version(asset):
+    """Short content hash so browsers fetch a fresh copy whenever a file changes."""
+    with open(os.path.join(ROOT, asset), "rb") as f:
+        return hashlib.sha1(f.read()).hexdigest()[:8]
+
+
+def bust(match):
+    asset = match.group(2)
+    return f'{match.group(1)}{asset}?v={version(asset)}"'
+
+
 for rel in pages():
     path = os.path.join(ROOT, rel)
     pre = "" if rel == "index.html" else "../"
@@ -104,5 +118,7 @@ for rel in pages():
         s = s.replace("</body>", f'  <script src="{pre}assets/js/share.js"></script>\n</body>', 1)
     s = re.sub(r'<header class="site-header">.*?</header>', lambda m: header(pre, rel == "index.html"), s, flags=re.S)
     s = re.sub(r'<footer class="site-footer">.*?</footer>', lambda m: footer(pre), s, flags=re.S)
+    # Cache-busting: SiteGround caches CSS/JS for a year, so tag each link with the file's hash.
+    s = re.sub(r'((?:href|src)="(?:\.\./)?)(assets/(?:css|js)/[\w.-]+\.(?:css|js))(?:\?v=\w+)?"', bust, s)
     open(path, "w", encoding="utf-8").write(s)
     print("synced", rel)
