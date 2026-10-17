@@ -17,9 +17,10 @@ async function draw() {
   x.beginPath(); x.arc(W - 60, 40, 230, 0, Math.PI * 2); x.stroke();
   x.beginPath(); x.arc(60, H + 40, 200, 0, Math.PI * 2); x.stroke();
   // Mark
-  x.fillStyle = '#fff'; x.beginPath(); x.roundRect(P, 86, 72, 72, 10); x.fill();
-  x.fillStyle = '#0b2545'; x.font = '700 32px "Playfair Display"'; x.textAlign = 'center'; x.fillText('LS', P + 36, 134); x.textAlign = 'left';
-  x.fillStyle = '#b9cdea'; x.font = '700 24px "DM Sans"'; x.fillText('FREE FINANCIAL PLANNING TOOLS'.split('').join(' '), P + 96, 132);
+  x.font = '700 28px "DM Sans"'; const mark = 'S\u200a\u200aT\u200a\u200aA\u200a\u200aN', mw = x.measureText(mark).width + 44;
+  x.fillStyle = '#fff'; x.beginPath(); x.roundRect(P, 86, mw, 72, 10); x.fill();
+  x.fillStyle = '#0b2545'; x.textAlign = 'center'; x.fillText(mark, P + mw / 2, 132); x.textAlign = 'left';
+  x.fillStyle = '#b9cdea'; x.font = '700 24px "DM Sans"'; x.fillText('FREE FINANCIAL PLANNING TOOLS'.split('').join('\u200a'), P + mw + 24, 132);
   x.fillStyle = '#fff'; x.font = '700 76px "Playfair Display"';
   x.fillText('LearnwithStanley', P, 290); x.fillText('Calculators', P, 380);
   x.fillStyle = '#dbe5f3'; x.font = '400 30px "DM Sans"';

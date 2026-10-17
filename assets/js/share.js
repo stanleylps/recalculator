@@ -133,16 +133,17 @@
     ctx.beginPath(); ctx.arc(S - 40, 40, 190, 0, Math.PI * 2); ctx.stroke();
 
     // Brand row
+    ctx.font = '700 22px ' + SANS;
+    var mark = spaced('STAN'), markW = ctx.measureText(mark).width + 36;
     ctx.fillStyle = '#ffffff';
-    roundRect(ctx, P, P - 8, 56, 56, 8); ctx.fill();
+    roundRect(ctx, P, P - 8, markW, 56, 8); ctx.fill();
     ctx.fillStyle = NAVY_800;
-    ctx.font = '700 24px ' + SERIF;
     ctx.textAlign = 'center';
-    ctx.fillText('LS', P + 28, P + 29);
+    ctx.fillText(mark, P + markW / 2, P + 28);
     ctx.textAlign = 'left';
     ctx.fillStyle = '#ffffff';
     ctx.font = '700 34px ' + SERIF;
-    ctx.fillText(BRAND, P + 76, P + 31);
+    ctx.fillText(BRAND, P + markW + 20, P + 31);
 
     // Tool name + result
     var y = 220;
@@ -199,7 +200,7 @@
     ctx.textAlign = 'left';
   }
 
-  function spaced(s) { return s.split('').join(String.fromCharCode(8202)); }
+  function spaced(s) { return s.split('').join(String.fromCharCode(8202, 8202)); }
   function roundRect(ctx, x, y, w, h, r) {
     ctx.beginPath();
     ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r);

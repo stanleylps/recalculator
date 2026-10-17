@@ -15,9 +15,9 @@ SITE_URL = "https://stanleylps.github.io/recalculator/"
 FONTS = ("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700"
          "&family=Playfair+Display:wght@600;700&display=swap")
 ICON = ("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E"
-        "%3Crect width=%2732%27 height=%2732%27 fill=%27%230b2545%27/%3E%3Ctext x=%2716%27 y=%2721%27 "
-        "font-family=%27Georgia,serif%27 font-size=%2714%27 font-weight=%27700%27 fill=%27white%27 "
-        "text-anchor=%27middle%27%3ELS%3C/text%3E%3C/svg%3E")
+        "%3Crect width=%2732%27 height=%2732%27 rx=%274%27 fill=%27%230b2545%27/%3E%3Ctext x=%2716%27 y=%2720%27 "
+        "font-family=%27Arial,sans-serif%27 font-size=%2710%27 font-weight=%27700%27 fill=%27white%27 "
+        "text-anchor=%27middle%27 textLength=%2726%27 lengthAdjust=%27spacingAndGlyphs%27%3ESTAN%3C/text%3E%3C/svg%3E")
 
 
 def head(pre, rel, title, desc):

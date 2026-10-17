@@ -89,8 +89,9 @@ a { color: var(--link); }
 .site-header { background: var(--surface); border-top: 4px solid var(--navy-800); border-bottom: 1px solid var(--line); }
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; flex-wrap: wrap; }
 .brand { display: inline-flex; align-items: center; gap: 10px; font-family: var(--serif); font-weight: 700; color: var(--ink); text-decoration: none; font-size: 1.2rem; line-height: 1.2; white-space: nowrap; }
-.brand::before { content: "LS"; display: inline-grid; place-items: center; width: 32px; height: 32px; background: var(--navy-800); color: #fff; font-family: var(--serif); font-size: 0.85rem; letter-spacing: 0.02em; border-radius: 4px; }
-@media (max-width: 420px) { .brand { font-size: 1.02rem; } .brand::before { width: 28px; height: 28px; font-size: 0.75rem; } }
+.brand::before { content: "STAN"; display: inline-grid; place-items: center; height: 32px; padding: 0 9px; background: var(--navy-800); color: #fff; font-family: var(--sans); font-weight: 700; font-size: 0.78rem; letter-spacing: 0.14em; border-radius: 4px; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .brand::before { background: #fff; color: var(--navy-800); } }
+@media (max-width: 420px) { .brand { font-size: 1.02rem; } .brand::before { height: 28px; padding: 0 7px; font-size: 0.68rem; } }
 .nav { display: flex; gap: 4px; flex-wrap: wrap; }
 .nav a { color: var(--ink-2); text-decoration: none; font-weight: 700; padding: 8px 14px; border-radius: var(--radius); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.74rem; border: 1px solid var(--line); }
 .nav a:hover { border-color: var(--navy-700); color: var(--navy-700); }
