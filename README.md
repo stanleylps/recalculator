@@ -1,6 +1,6 @@
-# LearnwithStanley.com Retirement Calculators
+# LearnwithStanley Calculators
 
-Free retirement calculators for learnwithstanley.com/recalculator.
+Free financial planning calculators for learnwithstanley.com/recalculator.
 
 Retirement
 - **Goal planner** (`goal/`): monthly income you want → portfolio needed, monthly saving, and how long the money lasts.

@@ -31,7 +31,7 @@ def header(pre, is_home):
     current = ' aria-current="page"' if is_home else ''
     return f'''<header class="site-header">
     <div class="wrap">
-      <a class="brand" href="https://learnwithstanley.com/">LearnwithStanley.com<span class="sep" aria-hidden="true">|</span><small>Retirement Calculators</small></a>
+      <a class="brand" href="{pre or './'}">LearnwithStanley Calculators</a>
       <nav class="nav" aria-label="Site">
         <a href="{pre or './'}"{current}>All tools</a>
       </nav>
