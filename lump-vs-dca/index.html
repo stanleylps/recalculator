@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lump Sum vs Monthly Investing · LearnwithStanley.com</title>
+  <!-- layout:head -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%231c1917%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-family=%27Georgia,serif%27 font-size=%2720%27 font-weight=%27700%27 fill=%27white%27 text-anchor=%27middle%27%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <!-- /layout:head -->
+  <meta name="description" content="Compare investing a lump sum all at once with spreading it out monthly.">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="https://learnwithstanley.com/">LearnwithStanley.com<span class="sep" aria-hidden="true">|</span><small>Retirement Calculators</small></a>
+      <nav class="nav" aria-label="Site">
+        <a href="../">All tools</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <h1>Invest it all now, or spread it out?</h1>
+      <p>You have a sum to invest. Compare putting it all in today with investing equal amounts each month. Try a market fall during the investing period to see when spreading it out helps.</p>
+    </section>
+
+    <div class="calc">
+      <form class="card inputs" id="form" onsubmit="return false" novalidate>
+        <h2>Your money</h2>
+        <div class="field">
+          <label for="amount">Amount to invest</label>
+          <div class="input"><span class="affix">$</span><input id="amount" data-key="amount" data-type="money" data-min="0" value="100000"></div>
+        </div>
+        <div class="field">
+          <label for="months">Spread it over</label>
+          <div class="slider-row">
+            <input type="range" min="2" max="36" step="1" data-mirror="months" aria-label="Spread it over">
+            <div class="input"><input id="months" data-key="months" data-type="number" data-min="1" data-max="60" value="12"><span class="affix">months</span></div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="horizon">Compare after</label>
+          <div class="input"><input id="horizon" data-key="horizon" data-type="number" data-min="1" data-max="40" value="5"><span class="affix">yrs</span></div>
+        </div>
+        <h2>Assumptions</h2>
+        <div class="field">
+          <label for="ret">Expected market return</label>
+          <div class="input"><input id="ret" data-key="ret" data-type="percent" data-min="-10" data-max="30" value="7"><span class="affix">% / yr</span></div>
+        </div>
+        <div class="field">
+          <label for="cash">Interest on cash waiting to be invested</label>
+          <div class="input"><input id="cash" data-key="cash" data-type="percent" data-min="0" data-max="15" value="2"><span class="affix">% / yr</span></div>
+        </div>
+        <div class="field">
+          <label for="shock">Extra market move during the investing period</label>
+          <div class="slider-row">
+            <input type="range" min="-40" max="40" step="5" data-mirror="shock" aria-label="Extra market move during the investing period">
+            <div class="input"><input id="shock" data-key="shock" data-type="percent" data-min="-60" data-max="100" value="0"><span class="affix">%</span></div>
+          </div>
+          <span class="hint">Try -20 for a market fall, or 20 for a rally.</span>
+        </div>
+
+        <div class="input-actions">
+          <button type="button" class="btn" data-action="share">Copy link to these numbers</button>
+          <button type="button" class="btn" data-action="reset">Reset</button>
+        </div>
+      </form>
+
+      <div class="results" aria-live="polite">
+        <div class="card hero">
+          <div class="label" id="heroLabel">After the comparison period</div>
+          <div class="big" id="heroValue">—</div>
+          <div class="sub" id="heroSub"></div>
+        </div>
+        <div class="compare">
+          <div class="card stat" id="lumpCard">
+            <div class="label">Lump sum today<span class="badge" id="lumpBadge" hidden>Ahead</span></div>
+            <div class="value" id="lump">—</div>
+            <div class="note" id="lumpNote"></div>
+          </div>
+          <div class="card stat" id="dcaCard">
+            <div class="label">Invest monthly<span class="badge" id="dcaBadge" hidden>Ahead</span></div>
+            <div class="value" id="dca">—</div>
+            <div class="note" id="dcaNote"></div>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head">
+            <h2>Value over time</h2>
+          </div>
+          <div class="legend">
+            <span><i style="background:var(--save)"></i>Lump sum</span>
+            <span><i style="background:var(--draw)"></i>Monthly investing</span>
+          </div>
+          <div class="chart" id="chart"></div>
+          <p class="callout" id="explain"></p>
+        </div>
+      </div>
+    </div>
+
+    <p class="notes">This is a simplified model: the market grows smoothly at the expected return, plus the one-off move you choose spread evenly over the investing period. Real markets are far less predictable.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="disclosure"><strong>Important:</strong> These calculators are for general information and education only. They do not take into account your personal objectives, financial situation or needs, and are not financial advice or a recommendation to buy or sell any investment product. Results are hypothetical illustrations based on the assumptions you enter and are not guaranteed. The value of investments can go down as well as up. Please speak with a licensed financial adviser before making any financial decision. <a href="../disclosure/">Read the full disclosure</a>.</p>
+      <div class="footer-bottom">
+        <span>&copy; 2026 LearnwithStanley.com</span>
+        <a href="https://learnwithstanley.com/">Visit LearnwithStanley.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/calc.js"></script>
+  <script src="../assets/js/chart.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/lump-vs-dca.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Insurance Needs · LearnwithStanley.com</title>
+  <!-- layout:head -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%231c1917%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-family=%27Georgia,serif%27 font-size=%2720%27 font-weight=%27700%27 fill=%27white%27 text-anchor=%27middle%27%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <!-- /layout:head -->
+  <meta name="description" content="Estimate how much life insurance cover your family would need, and your protection gap.">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="https://learnwithstanley.com/">LearnwithStanley.com<span class="sep" aria-hidden="true">|</span><small>Retirement Calculators</small></a>
+      <nav class="nav" aria-label="Site">
+        <a href="../">All tools</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <h1>How much life insurance cover do I need?</h1>
+      <p>Add up what your family would need if your income stopped, then subtract the cover and assets you already have. What’s left is your protection gap.</p>
+    </section>
+
+    <div class="calc">
+      <form class="card inputs" id="form" onsubmit="return false" novalidate>
+        <h2>What your family would need</h2>
+        <div class="field">
+          <label for="need">Yearly amount to support your family</label>
+          <div class="input"><span class="affix">$</span><input id="need" data-key="need" data-type="money" data-min="0" value="60000"></div>
+          <span class="hint">Their living costs without you, in today’s money.</span>
+        </div>
+        <div class="field">
+          <label for="years">For how many years</label>
+          <div class="input"><input id="years" data-key="years" data-type="number" data-min="0" data-max="60" value="15"><span class="affix">yrs</span></div>
+          <span class="hint">For example, until your youngest child finishes school.</span>
+        </div>
+        <div class="field">
+          <label for="debts">Debts to clear</label>
+          <div class="input"><span class="affix">$</span><input id="debts" data-key="debts" data-type="money" data-min="0" value="300000"></div>
+          <span class="hint">Mortgage, car and other loans.</span>
+        </div>
+        <div class="field">
+          <label for="goals">Other goals to fund</label>
+          <div class="input"><span class="affix">$</span><input id="goals" data-key="goals" data-type="money" data-min="0" value="100000"></div>
+          <span class="hint">For example, children’s education.</span>
+        </div>
+        <div class="field">
+          <label for="final">Final expenses</label>
+          <div class="input"><span class="affix">$</span><input id="final" data-key="final" data-type="money" data-min="0" value="20000"></div>
+        </div>
+        <h2>What you already have</h2>
+        <div class="field">
+          <label for="cover">Existing life insurance cover</label>
+          <div class="input"><span class="affix">$</span><input id="cover" data-key="cover" data-type="money" data-min="0" value="200000"></div>
+        </div>
+        <div class="field">
+          <label for="assets">Savings and investments your family could use</label>
+          <div class="input"><span class="affix">$</span><input id="assets" data-key="assets" data-type="money" data-min="0" value="50000"></div>
+        </div>
+        <h2>Assumptions</h2>
+        <div class="field">
+          <label for="ret">Return on the payout</label>
+          <div class="input"><input id="ret" data-key="ret" data-type="percent" data-min="-10" data-max="30" value="4"><span class="affix">% / yr</span></div>
+          <span class="hint">What the lump sum could earn while it’s being used.</span>
+        </div>
+        <div class="field">
+          <label for="infl">Inflation</label>
+          <div class="input"><input id="infl" data-key="infl" data-type="percent" data-min="-5" data-max="20" value="3"><span class="affix">% / yr</span></div>
+        </div>
+
+        <div class="input-actions">
+          <button type="button" class="btn" data-action="share">Copy link to these numbers</button>
+          <button type="button" class="btn" data-action="reset">Reset</button>
+        </div>
+      </form>
+
+      <div class="results" aria-live="polite">
+        <div class="card hero">
+          <div class="label" id="heroLabel">Your protection gap</div>
+          <div class="big" id="heroValue">—</div>
+          <div class="sub" id="heroSub"></div>
+        </div>
+        <div class="stats">
+          <div class="card stat " id="needTotalCard">
+            <div class="label" id="needTotalLabel">Total your family would need</div>
+            <div class="value" id="needTotal">—</div>
+            <div class="note" id="needTotalNote"></div>
+          </div>
+          <div class="card stat " id="haveTotalCard">
+            <div class="label" id="haveTotalLabel">What you already have</div>
+            <div class="value" id="haveTotal">—</div>
+            <div class="note" id="haveTotalNote"></div>
+          </div>
+          <div class="card stat " id="incomeCard">
+            <div class="label" id="incomeLabel">Lump sum for living costs</div>
+            <div class="value" id="income">—</div>
+            <div class="note" id="incomeNote"></div>
+          </div>
+          <div class="card stat " id="gapYearsCard">
+            <div class="label" id="gapYearsLabel">Years the gap represents</div>
+            <div class="value" id="gapYears">—</div>
+            <div class="note" id="gapYearsNote"></div>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><h2>Breakdown</h2></div>
+          <div class="bars" id="bars"></div>
+          <p class="callout" id="explain" style="margin-top:14px"></p>
+        </div>
+      </div>
+    </div>
+
+    <p class="notes">The living-cost amount is the lump sum that, invested at the return you enter, pays the yearly amount (rising with inflation) at the start of each year for the number of years you choose.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="disclosure"><strong>Important:</strong> These calculators are for general information and education only. They do not take into account your personal objectives, financial situation or needs, and are not financial advice or a recommendation to buy or sell any investment product. Results are hypothetical illustrations based on the assumptions you enter and are not guaranteed. The value of investments can go down as well as up. Please speak with a licensed financial adviser before making any financial decision. <a href="../disclosure/">Read the full disclosure</a>.</p>
+      <div class="footer-bottom">
+        <span>&copy; 2026 LearnwithStanley.com</span>
+        <a href="https://learnwithstanley.com/">Visit LearnwithStanley.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/calc.js"></script>
+  <script src="../assets/js/chart.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/bars.js"></script>
+  <script src="../assets/js/insurance.js"></script>
+</body>
+</html>

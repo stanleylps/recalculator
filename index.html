@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%231c1917%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-family=%27Georgia,serif%27 font-size=%2720%27 font-weight=%27700%27 fill=%27white%27 text-anchor=%27middle%27%3ES%3C/text%3E%3C/svg%3E">
   <title>Retirement Calculators · LearnwithStanley.com</title>
-  <meta name="description" content="Free, quick retirement calculators: how much to save for the income you want, and how big your portfolio could grow.">
+  <!-- layout:head -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%231c1917%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-family=%27Georgia,serif%27 font-size=%2720%27 font-weight=%27700%27 fill=%27white%27 text-anchor=%27middle%27%3ES%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
+  <!-- /layout:head -->
+  <meta name="description" content="Free, quick calculators for retirement, saving, debt and protection planning.">
 </head>
 <body>
   <header class="site-header">
     <div class="wrap">
       <a class="brand" href="https://learnwithstanley.com/">LearnwithStanley.com<span class="sep" aria-hidden="true">|</span><small>Retirement Calculators</small></a>
-      <nav class="nav" aria-label="Tools">
+      <nav class="nav" aria-label="Site">
         <a href="./" aria-current="page">All tools</a>
-        <a href="goal/">Goal planner</a>
-        <a href="projection/">Portfolio projection</a>
       </nav>
     </div>
   </header>
@@ -27,13 +27,13 @@
     <div class="wrap">
       <p class="banner-kicker">LearnwithStanley.com</p>
       <h1>Retirement Calculators</h1>
-      <p>Quick, simple checks to see where you stand and what it takes to reach the retirement you want. Pick a tool to start.</p>
+      <p>Quick, simple checks to see where you stand and what it takes to reach your goals. Pick a tool to start.</p>
     </div>
   </section>
 
   <main class="wrap">
-
-    <!-- Add new tools here: copy a card, point it at the new folder. -->
+    <!-- Add new tools here: copy a card into a group and point it at the new folder. -->
+    <h2 class="group-title">Retirement</h2>
     <section class="tools">
       <a class="card tool" href="goal/">
         <span class="tag">Plan</span>
@@ -44,10 +44,77 @@
       <a class="card tool" href="projection/">
         <span class="tag">Project</span>
         <h2>Portfolio projection</h2>
-        <p>Start from what you save today. See how big your portfolio could grow, what it's worth after inflation, and the income it could pay.</p>
+        <p>Start from what you save today. See how big your portfolio could grow, what it’s worth after inflation, and the income it could pay.</p>
         <span class="go">Open projection →</span>
       </a>
+      <a class="card tool" href="drawdown/">
+        <span class="tag">Draw down</span>
+        <h2>How long will it last?</h2>
+        <p>Start with a retirement lump sum and a monthly income. See how many years it lasts, and the most you can safely draw.</p>
+        <span class="go">Open drawdown →</span>
+      </a>
+      <a class="card tool" href="cost-of-delay/">
+        <span class="tag">Start early</span>
+        <h2>Cost of delay</h2>
+        <p>See what waiting five or ten years to start saving really costs by retirement, and what it takes to catch up.</p>
+        <span class="go">Open cost of delay →</span>
+      </a>
     </section>
+
+    <h2 class="group-title">Saving and investing</h2>
+    <section class="tools">
+      <a class="card tool" href="education/">
+        <span class="tag">Family</span>
+        <h2>Education fund</h2>
+        <p>How much to save each month for your child’s university, with education costs rising every year.</p>
+        <span class="go">Open education fund →</span>
+      </a>
+      <a class="card tool" href="emergency-fund/">
+        <span class="tag">Safety net</span>
+        <h2>Emergency fund</h2>
+        <p>How many months of expenses to set aside, and how long it takes to build your safety net.</p>
+        <span class="go">Open emergency fund →</span>
+      </a>
+      <a class="card tool" href="lump-vs-dca/">
+        <span class="tag">Invest</span>
+        <h2>Lump sum vs monthly investing</h2>
+        <p>Compare investing everything today with spreading it out, and see how a market fall changes the result.</p>
+        <span class="go">Open comparison →</span>
+      </a>
+    </section>
+
+    <h2 class="group-title">Debt</h2>
+    <section class="tools">
+      <a class="card tool" href="loan/">
+        <span class="tag">Borrow</span>
+        <h2>Loan and mortgage repayment</h2>
+        <p>Your monthly instalment and total interest, and how much an extra monthly payment saves.</p>
+        <span class="go">Open loan calculator →</span>
+      </a>
+      <a class="card tool" href="debt-payoff/">
+        <span class="tag">Pay off</span>
+        <h2>Debt payoff: snowball vs avalanche</h2>
+        <p>List your debts and compare paying the smallest first with paying the highest interest first.</p>
+        <span class="go">Open debt planner →</span>
+      </a>
+    </section>
+
+    <h2 class="group-title">Protection and overview</h2>
+    <section class="tools">
+      <a class="card tool" href="insurance/">
+        <span class="tag">Protect</span>
+        <h2>Insurance needs</h2>
+        <p>Estimate the life cover your family would need and the gap between that and what you have.</p>
+        <span class="go">Open insurance needs →</span>
+      </a>
+      <a class="card tool" href="net-worth/">
+        <span class="tag">Snapshot</span>
+        <h2>Net worth</h2>
+        <p>Add up what you own and what you owe for a quick snapshot of where you stand.</p>
+        <span class="go">Open net worth →</span>
+      </a>
+    </section>
+
   </main>
 
   <footer class="site-footer">

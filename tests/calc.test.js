@@ -83,4 +83,85 @@ test('projection: yearly step-up raises the saving each year', () => {
   close(p.futureValue, p.totalContributed, 1e-6, 'no growth at 0%');
 });
 
+test('drawdown: sustainable withdrawal empties the pot in exactly the target years', () => {
+  const w = RC.sustainableWithdrawal(500_000, 0.05, 0.03, 30);
+  close(RC.simulateDrawdown(500_000, w, 0.05, 0.03).months, 360, 0.01, 'months');
+  close(RC.sustainableWithdrawal(120_000, 0, 0, 10), 1000, 1e-9, 'zero rates');
+});
+
+test('emergency fund: target and months to build', () => {
+  const e = RC.emergencyFund({ monthlyExpenses: 3000, months: 6, current: 6000, monthlySaving: 1000, interestRate: 0 });
+  assert.strictEqual(e.target, 18000);
+  assert.strictEqual(e.monthsToTarget, 12);
+  close(e.coverMonths, 2, 1e-9, 'cover');
+  assert.strictEqual(RC.emergencyFund({ monthlyExpenses: 3000, months: 6, current: 0, monthlySaving: 0, interestRate: 0 }).monthsToTarget, Infinity);
+});
+
+test('loan: standard mortgage payment and interest', () => {
+  close(RC.loanPayment(300_000, 0.04, 30), 1432.25, 0.01, 'payment');
+  const l = RC.loan({ principal: 300_000, rate: 0.04, years: 30, extra: 0 });
+  assert.strictEqual(l.months, 360);
+  close(l.totalInterest, l.payment * 360 - 300_000, 0.01, 'interest');
+  assert.strictEqual(l.interestSaved, 0);
+  const x = RC.loan({ principal: 300_000, rate: 0.04, years: 30, extra: 500 });
+  assert.ok(x.extraMonths < 360 && x.interestSaved > 0);
+  close(RC.loanPayment(12_000, 0, 1), 1000, 1e-9, 'zero rate');
+});
+
+test('debt payoff: simple case and avalanche never costs more interest', () => {
+  const one = RC.debtPayoff([{ name: 'A', balance: 1000, rate: 0, minimum: 100 }], 0, 'avalanche');
+  assert.strictEqual(one.months, 10);
+  assert.strictEqual(one.totalInterest, 0);
+  const debts = [
+    { name: 'Card', balance: 5000, rate: 0.24, minimum: 150 },
+    { name: 'Car', balance: 15000, rate: 0.06, minimum: 300 },
+    { name: 'Personal', balance: 2000, rate: 0.12, minimum: 60 }
+  ];
+  const sb = RC.debtPayoff(debts, 300, 'snowball');
+  const av = RC.debtPayoff(debts, 300, 'avalanche');
+  assert.ok(av.totalInterest <= sb.totalInterest + 1e-6);
+  assert.strictEqual(sb.order[0].name, 'Personal');
+  assert.strictEqual(av.order[0].name, 'Card');
+  assert.strictEqual(debts[0].balance, 5000, 'inputs not mutated');
+  const never = RC.debtPayoff([{ name: 'X', balance: 10000, rate: 0.3, minimum: 100 }], 0, 'avalanche');
+  assert.strictEqual(never.months, Infinity);
+  console.log('   example: snowball', sb.months, 'mo', sb.totalInterest.toFixed(0), '| avalanche', av.months, 'mo', av.totalInterest.toFixed(0));
+});
+
+test('education fund: zero rates reduce to simple arithmetic', () => {
+  const e = RC.educationFund({ childAge: 6, startAge: 18, studyYears: 4, annualCost: 20000, feeInflation: 0, savings: 8000, returnRate: 0 });
+  assert.strictEqual(e.yearsUntil, 12);
+  close(e.target, 80000, 1e-9, 'target');
+  close(e.monthlySaving, 72000 / 144, 1e-9, 'saving');
+  const g = RC.educationFund({ childAge: 6, startAge: 18, studyYears: 4, annualCost: 20000, feeInflation: 0.05, savings: 0, returnRate: 0.06 });
+  close(g.costs[0], 20000 * Math.pow(1.05, 12), 1e-6, 'first year fee');
+  close(RC.futureValue(0, g.monthlySaving, 0.06, 12), g.target, 1e-3, 'saving reaches target');
+});
+
+test('insurance: income need equals annual need x years when return = inflation', () => {
+  const r = RC.insuranceNeeds({ annualNeed: 60000, years: 10, returnRate: 0.03, inflation: 0.03, debts: 200000, goals: 100000, finalExpenses: 20000, existingCover: 300000, assets: 50000 });
+  close(r.income, 600000, 1e-6, 'income');
+  close(r.gap, 600000 + 320000 - 350000, 1e-6, 'gap');
+});
+
+test('cost of delay: no delay costs nothing, catch-up saving closes the gap', () => {
+  assert.strictEqual(RC.costOfDelay({ monthlySaving: 500, returnRate: 0.07, years: 30, delay: 0 }).cost, 0);
+  const c = RC.costOfDelay({ monthlySaving: 500, returnRate: 0.07, years: 30, delay: 10, portfolio: 10000 });
+  close(c.startNow, RC.futureValue(10000, 500, 0.07, 30), 1e-6, 'now');
+  close(RC.futureValue(RC.futureValue(10000, 0, 0.07, 10), c.catchUpSaving, 0.07, 20), c.startNow, 1e-3, 'catch up');
+  close(c.pathLater[30], c.startLater, 1e-6, 'path end');
+  assert.ok(c.cost > 0);
+});
+
+test('lump sum vs DCA: lump wins in a rising market, DCA wins after a fall', () => {
+  const base = { amount: 100000, dcaMonths: 12, horizonYears: 5, returnRate: 0.07, cashRate: 0 };
+  const up = RC.lumpVsDca({ ...base, shock: 0 });
+  assert.ok(up.lump > up.dca);
+  close(up.lump, 100000 * Math.pow(1.07, 5), 1e-6, 'lump fv');
+  const down = RC.lumpVsDca({ ...base, shock: -0.3 });
+  assert.ok(down.dca > down.lump);
+  const same = RC.lumpVsDca({ ...base, dcaMonths: 1, shock: 0 });
+  close(same.lump, same.dca, 1e-6, 'one month DCA = lump');
+});
+
 console.log(`\n${passed} tests passed`);

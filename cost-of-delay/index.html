@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cost of Delay · LearnwithStanley.com</title>
+  <!-- layout:head -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%231c1917%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-family=%27Georgia,serif%27 font-size=%2720%27 font-weight=%27700%27 fill=%27white%27 text-anchor=%27middle%27%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <!-- /layout:head -->
+  <meta name="description" content="See how much waiting a few years to start saving costs you by retirement.">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="https://learnwithstanley.com/">LearnwithStanley.com<span class="sep" aria-hidden="true">|</span><small>Retirement Calculators</small></a>
+      <nav class="nav" aria-label="Site">
+        <a href="../">All tools</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <h1>What does waiting to start cost me?</h1>
+      <p>Compare starting to save today with starting a few years later. Same monthly amount, same retirement date. The difference is what the wait costs.</p>
+    </section>
+
+    <div class="calc">
+      <form class="card inputs" id="form" onsubmit="return false" novalidate>
+        <h2>Your plan</h2>
+        <div class="field">
+          <label for="saving">Monthly saving</label>
+          <div class="input"><span class="affix">$</span><input id="saving" data-key="saving" data-type="money" data-min="0" value="1000"></div>
+        </div>
+        <div class="field">
+          <label for="portfolio">Amount already invested</label>
+          <div class="input"><span class="affix">$</span><input id="portfolio" data-key="portfolio" data-type="money" data-min="0" value="0"></div>
+          <span class="hint">Optional. It stays invested either way.</span>
+        </div>
+        <div class="field">
+          <label for="years">Years until retirement</label>
+          <div class="slider-row">
+            <input type="range" min="5" max="50" step="1" data-mirror="years" aria-label="Years until retirement">
+            <div class="input"><input id="years" data-key="years" data-type="number" data-min="1" data-max="60" value="30"><span class="affix">yrs</span></div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="delay">Years you wait before starting</label>
+          <div class="slider-row">
+            <input type="range" min="1" max="20" step="1" data-mirror="delay" aria-label="Years you wait before starting">
+            <div class="input"><input id="delay" data-key="delay" data-type="number" data-min="0" data-max="40" value="10"><span class="affix">yrs</span></div>
+          </div>
+        </div>
+        <h2>Assumptions</h2>
+        <div class="field">
+          <label for="ret">Expected return</label>
+          <div class="input"><input id="ret" data-key="ret" data-type="percent" data-min="-10" data-max="30" value="7"><span class="affix">% / yr</span></div>
+        </div>
+
+        <div class="input-actions">
+          <button type="button" class="btn" data-action="share">Copy link to these numbers</button>
+          <button type="button" class="btn" data-action="reset">Reset</button>
+        </div>
+      </form>
+
+      <div class="results" aria-live="polite">
+        <div class="card hero">
+          <div class="label" id="heroLabel">Waiting costs you</div>
+          <div class="big" id="heroValue">—</div>
+          <div class="sub" id="heroSub"></div>
+        </div>
+        <div class="stats">
+          <div class="card stat " id="nowCard">
+            <div class="label" id="nowLabel">Start today</div>
+            <div class="value" id="now">—</div>
+            <div class="note" id="nowNote"></div>
+          </div>
+          <div class="card stat " id="laterCard">
+            <div class="label" id="laterLabel">Start later</div>
+            <div class="value" id="later">—</div>
+            <div class="note" id="laterNote"></div>
+          </div>
+          <div class="card stat " id="catchupCard">
+            <div class="label" id="catchupLabel">Monthly saving to catch up</div>
+            <div class="value" id="catchup">—</div>
+            <div class="note" id="catchupNote"></div>
+          </div>
+          <div class="card stat " id="contribCard">
+            <div class="label" id="contribLabel">Less money put in</div>
+            <div class="value" id="contrib">—</div>
+            <div class="note" id="contribNote"></div>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head">
+            <h2>Start now vs start later</h2>
+          </div>
+          <div class="legend">
+            <span><i style="background:var(--save)"></i>Start today</span>
+            <span><i style="background:var(--draw)"></i>Start later</span>
+          </div>
+          <div class="chart" id="chart"></div>
+          <p class="callout" id="explain"></p>
+          <details class="table">
+            <summary>Year-by-year table</summary>
+            <div class="table-scroll"><table>
+              <thead><tr><th>Wait</th><th>Portfolio at retirement</th><th>Cost of waiting</th></tr></thead>
+              <tbody id="rows"></tbody>
+            </table></div>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <p class="notes">Results assume the same return every year. Savings are added at the end of each month.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="disclosure"><strong>Important:</strong> These calculators are for general information and education only. They do not take into account your personal objectives, financial situation or needs, and are not financial advice or a recommendation to buy or sell any investment product. Results are hypothetical illustrations based on the assumptions you enter and are not guaranteed. The value of investments can go down as well as up. Please speak with a licensed financial adviser before making any financial decision. <a href="../disclosure/">Read the full disclosure</a>.</p>
+      <div class="footer-bottom">
+        <span>&copy; 2026 LearnwithStanley.com</span>
+        <a href="https://learnwithstanley.com/">Visit LearnwithStanley.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/calc.js"></script>
+  <script src="../assets/js/chart.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/cost-of-delay.js"></script>
+</body>
+</html>

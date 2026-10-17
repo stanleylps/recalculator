@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Debt Payoff Planner · LearnwithStanley.com</title>
+  <!-- layout:head -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 fill=%27%231c1917%27/%3E%3Ctext x=%2716%27 y=%2723%27 font-family=%27Georgia,serif%27 font-size=%2720%27 font-weight=%27700%27 fill=%27white%27 text-anchor=%27middle%27%3ES%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <!-- /layout:head -->
+  <meta name="description" content="Compare the snowball and avalanche methods for paying off several debts.">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="https://learnwithstanley.com/">LearnwithStanley.com<span class="sep" aria-hidden="true">|</span><small>Retirement Calculators</small></a>
+      <nav class="nav" aria-label="Site">
+        <a href="../">All tools</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="intro">
+      <h1>Which debt should I pay off first?</h1>
+      <p>List your debts and how much extra you can pay each month. We compare two proven methods: snowball (smallest balance first, for quick wins) and avalanche (highest interest first, to pay the least interest).</p>
+    </section>
+
+    <div class="calc">
+      <form class="card inputs" id="form" onsubmit="return false" novalidate>
+        <h2>Your debts</h2>
+        <div id="debts"></div>
+        <button type="button" class="btn" id="addDebt" style="margin-bottom:18px">+ Add a debt</button>
+        <h2>Extra each month</h2>
+        <div class="field">
+          <label for="extra">Extra you can pay on top of the minimums</label>
+          <div class="input"><span class="affix">$</span><input id="extra" data-key="extra" data-type="money" data-min="0" value="300"></div>
+          <span class="hint">Once a debt is cleared, its minimum payment rolls into the next one.</span>
+        </div>
+
+        <div class="input-actions">
+          <button type="button" class="btn" data-action="share">Copy link to these numbers</button>
+          <button type="button" class="btn" data-action="reset">Reset</button>
+        </div>
+      </form>
+
+      <div class="results" aria-live="polite">
+        <div class="card hero">
+          <div class="label" id="heroLabel">You could be debt-free in</div>
+          <div class="big" id="heroValue">—</div>
+          <div class="sub" id="heroSub"></div>
+        </div>
+        <div class="compare">
+          <div class="card stat" id="avCard">
+            <div class="label">Avalanche: highest interest first<span class="badge" id="avBadge" hidden>Best</span></div>
+            <div class="value" id="avTime">—</div>
+            <div class="note" id="avNote"></div>
+          </div>
+          <div class="card stat" id="sbCard">
+            <div class="label">Snowball: smallest balance first<span class="badge" id="sbBadge" hidden>Best</span></div>
+            <div class="value" id="sbTime">—</div>
+            <div class="note" id="sbNote"></div>
+          </div>
+        </div>
+        <div class="card panel">
+          <div class="panel-head">
+            <h2>Total debt over time</h2>
+          </div>
+          <div class="legend">
+            <span><i style="background:var(--save)"></i>Avalanche</span>
+            <span><i style="background:var(--draw)"></i>Snowball</span>
+          </div>
+          <div class="chart" id="chart"></div>
+          <p class="callout" id="explain"></p>
+        </div>
+        <div class="card panel">
+          <div class="panel-head"><h2>Payoff order</h2></div>
+          <div class="compare" id="orders"></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="notes">Assumes interest rates stay fixed, interest is charged monthly, and no new debt is added. Minimum payments stay the same until each debt is cleared.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p class="disclosure"><strong>Important:</strong> These calculators are for general information and education only. They do not take into account your personal objectives, financial situation or needs, and are not financial advice or a recommendation to buy or sell any investment product. Results are hypothetical illustrations based on the assumptions you enter and are not guaranteed. The value of investments can go down as well as up. Please speak with a licensed financial adviser before making any financial decision. <a href="../disclosure/">Read the full disclosure</a>.</p>
+      <div class="footer-bottom">
+        <span>&copy; 2026 LearnwithStanley.com</span>
+        <a href="https://learnwithstanley.com/">Visit LearnwithStanley.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/calc.js"></script>
+  <script src="../assets/js/chart.js"></script>
+  <script src="../assets/js/ui.js"></script>
+  <script src="../assets/js/debt-payoff.js"></script>
+</body>
+</html>

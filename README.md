@@ -2,9 +2,26 @@
 
 Free retirement calculators for learnwithstanley.com/recalculator.
 
-- **Goal planner** (`goal/`): monthly income you want → portfolio you need, monthly saving to get there, and how long the money lasts at your drawdown rate.
-- **Portfolio projection** (`projection/`): what you save today → how big the portfolio grows, its value in today's dollars, and the income it could pay.
-- **Disclosure** (`disclosure/`): full disclosure, linked from the footer of every page.
+Retirement
+- **Goal planner** (`goal/`): monthly income you want → portfolio needed, monthly saving, and how long the money lasts.
+- **Portfolio projection** (`projection/`): monthly saving → future portfolio, in today's dollars, and the income it could pay.
+- **Drawdown** (`drawdown/`): lump sum + monthly income → how long it lasts, and the safe withdrawal for a target number of years.
+- **Cost of delay** (`cost-of-delay/`): what waiting N years to start saving costs, and the catch-up saving.
+
+Saving and investing
+- **Education fund** (`education/`): monthly saving for university fees with education inflation.
+- **Emergency fund** (`emergency-fund/`): target months of expenses and time to build it.
+- **Lump sum vs monthly** (`lump-vs-dca/`): investing all at once vs spreading it out, with an optional market move.
+
+Debt
+- **Loan and mortgage** (`loan/`): instalment, total interest, and the effect of extra monthly payments.
+- **Debt payoff** (`debt-payoff/`): snowball vs avalanche across several debts.
+
+Protection and overview
+- **Insurance needs** (`insurance/`): needs-based life cover estimate and protection gap.
+- **Net worth** (`net-worth/`): assets minus liabilities with a breakdown.
+
+Plus **Disclosure** (`disclosure/`), linked from the footer of every page.
 
 Plain HTML, CSS and JavaScript. No build step, no dependencies, no server code. Every link is relative, so the site works under any subfolder.
 
@@ -28,18 +45,17 @@ Upload these files into a folder called `recalculator` at the root of your websi
 
 ```
 index.html
-goal/index.html
-projection/index.html
-disclosure/index.html
 assets/
+every tool folder (goal/, projection/, drawdown/, cost-of-delay/, education/,
+  emergency-fund/, lump-vs-dca/, loan/, debt-payoff/, insurance/, net-worth/, disclosure/)
 ```
 
-You don't need to upload `tests/`, `dev-server.py`, `README.md` or `.claude/`.
+You don't need to upload `tests/`, `scripts/`, `dev-server.py`, `README.md` or `.claude/`.
 
 To make a zip with only the files the website needs:
 
 ```bash
-zip -r recalculator.zip index.html goal projection disclosure assets
+zip -r recalculator.zip . -x "tests/*" "scripts/*" ".claude/*" ".git/*" dev-server.py README.md .gitignore
 ```
 
 How to upload depends on your host:
@@ -51,9 +67,10 @@ How to upload depends on your host:
 
 ## Adding another tool later
 
-1. Copy `projection/` to a new folder, e.g. `new-tool/`.
-2. Put its math in `assets/js/calc.js` (and a test in `tests/calc.test.js`) and its page logic in `assets/js/new-tool.js`.
-3. Add a card on the home page `index.html` and a link in the `<nav>` of every page.
+1. Copy an existing tool folder, e.g. `loan/`, to a new folder.
+2. Put its math in `assets/js/calc.js` (with a test in `tests/calc.test.js`) and its page logic in `assets/js/<tool>.js`.
+3. Add a card to the right group on the home page `index.html`.
+4. Run `python3 scripts/sync-layout.py` so the new page gets the shared header, footer, fonts and disclosure.
 
 ## Changing the currency symbol
 
