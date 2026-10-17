@@ -1,0 +1,33 @@
+<!doctype html>
+<!-- Draws the 1200x630 link-preview image (assets/img/og-image.png). Open via the dev server and click Download. -->
+<html><head><meta charset="utf-8"><title>OG image</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>body{margin:20px;font-family:sans-serif;background:#eee}canvas{width:600px;height:315px;display:block;margin-bottom:12px}</style>
+</head><body>
+<canvas id="c" width="1200" height="630"></canvas>
+<button id="dl">Download PNG</button>
+<script>
+async function draw() {
+  await Promise.all([document.fonts.load('700 60px "Playfair Display"'), document.fonts.load('400 30px "DM Sans"'), document.fonts.load('700 30px "DM Sans"')]);
+  const c = document.getElementById('c'), x = c.getContext('2d'), W = 1200, H = 630, P = 80;
+  const g = x.createLinearGradient(0, 0, W, H);
+  g.addColorStop(0, '#071a33'); g.addColorStop(0.5, '#0b2545'); g.addColorStop(1, '#1e4f8a');
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  x.strokeStyle = 'rgba(255,255,255,0.05)'; x.lineWidth = 70;
+  x.beginPath(); x.arc(W - 60, 40, 230, 0, Math.PI * 2); x.stroke();
+  x.beginPath(); x.arc(60, H + 40, 200, 0, Math.PI * 2); x.stroke();
+  // Mark
+  x.fillStyle = '#fff'; x.beginPath(); x.roundRect(P, 86, 72, 72, 10); x.fill();
+  x.fillStyle = '#0b2545'; x.font = '700 32px "Playfair Display"'; x.textAlign = 'center'; x.fillText('LS', P + 36, 134); x.textAlign = 'left';
+  x.fillStyle = '#b9cdea'; x.font = '700 24px "DM Sans"'; x.fillText('FREE FINANCIAL PLANNING TOOLS'.split('').join(' '), P + 96, 132);
+  x.fillStyle = '#fff'; x.font = '700 76px "Playfair Display"';
+  x.fillText('LearnwithStanley', P, 290); x.fillText('Calculators', P, 380);
+  x.fillStyle = '#dbe5f3'; x.font = '400 30px "DM Sans"';
+  x.fillText('Retirement · Saving · Investing · Debt · Protection', P, 446);
+  x.fillStyle = '#0a0f1a'; x.fillRect(0, H - 96, W, 96);
+  x.fillStyle = '#fff'; x.font = '700 32px "Playfair Display"'; x.fillText('learnwithstanley.com', P, H - 38);
+  x.fillStyle = '#a9b4c4'; x.font = '400 22px "DM Sans"'; x.textAlign = 'right'; x.fillText('Free to use · For education only', W - P, H - 40);
+}
+draw();
+document.getElementById('dl').onclick = () => { const a = document.createElement('a'); a.href = c.toDataURL('image/png'); a.download = 'og-image.png'; a.click(); };
+</script></body></html>

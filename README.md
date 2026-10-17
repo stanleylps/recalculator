@@ -72,6 +72,12 @@ How to upload depends on your host:
 3. Add a card to the right group on the home page `index.html`.
 4. Run `python3 scripts/sync-layout.py` so the new page gets the shared header, footer, fonts and disclosure.
 
+## Sharing results
+
+Every calculator has a **Share results** button (`assets/js/share.js`). It reads the results already shown on the page and offers a branded 1080×1080 image, WhatsApp, Telegram, Facebook, LinkedIn, X, email and a copyable summary. New tools get it automatically as long as they use the same `.hero` and `.stat` layout.
+
+Facebook and LinkedIn show the link preview image `assets/img/og-image.png` (redraw it with `scripts/og-image.html`). When the site moves to learnwithstanley.com, change `SITE_URL` in `scripts/sync-layout.py` and re-run the script so link previews point at the new address.
+
 ## Changing the currency symbol
 
 Edit `CURRENCY` at the top of `assets/js/ui.js`, and the `$` signs inside the input boxes in each page's HTML.
