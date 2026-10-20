@@ -1,0 +1,16 @@
+.git
+.claude
+tests
+scripts
+upload
+Dockerfile
+docker-compose.yml
+dev-server.py
+README.md
+*.zip
+__pycache__
+api/config.php
+api/.group-id
+.DS_Store
+.gitignore
+.dockerignore

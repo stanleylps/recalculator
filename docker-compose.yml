@@ -1,0 +1,15 @@
+services:
+  recalculator:
+    build: .
+    container_name: recalculator
+    ports:
+      - "8081:80"
+    volumes:
+      # Kept on this computer only (git-ignored). The container will not start until it exists.
+      - type: bind
+        source: ./api/config.php
+        target: /var/www/html/recalculator/api/config.php
+        read_only: true
+        bind:
+          create_host_path: false
+    restart: unless-stopped

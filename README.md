@@ -33,6 +33,10 @@ python3 dev-server.py
 
 Then open http://localhost:8080/recalculator/
 
+## Home server
+
+`docker compose up -d --build` serves the site at http://zenbook:8081/recalculator/ (port 8081) with PHP for the email sign-up. `api/config.php` is mounted from this folder, never copied into the image, and the container will not start until it exists. Run the command again after changing any file.
+
 ## Check the math
 
 ```bash
